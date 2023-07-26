@@ -10,10 +10,12 @@ import org.springframework.context.annotation.Profile;
 
 import com.luisdev.course.entities.Category;
 import com.luisdev.course.entities.Order;
+import com.luisdev.course.entities.OrderItem;
 import com.luisdev.course.entities.Product;
 import com.luisdev.course.entities.User;
 import com.luisdev.course.entities.enums.OrderStatus;
 import com.luisdev.course.repositories.CategoryRepository;
+import com.luisdev.course.repositories.OrderItemRepository;
 import com.luisdev.course.repositories.OrderRepository;
 import com.luisdev.course.repositories.ProductRepository;
 import com.luisdev.course.repositories.UserRepository;
@@ -33,6 +35,9 @@ public class TestConfig implements CommandLineRunner {
 	
 	@Autowired
 	private ProductRepository productRepository;
+	
+	@Autowired
+	private OrderItemRepository orderItemRepository;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -59,6 +64,7 @@ public class TestConfig implements CommandLineRunner {
 		
 		productRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
 		
+		
 		User u1 = new User(null, "Maria Brown", "maria@gmail.com", "988888888", "123456");
 		User u2 = new User(null, "Alex Green", "alex@gmail.com", "977777777", "123456");
 		User u3 = new User(null, "test", "test@gmail.com", "123456789", "1234569812");
@@ -69,6 +75,13 @@ public class TestConfig implements CommandLineRunner {
 		
 		userRepository.saveAll(Arrays.asList(u1,u2,u3));
 		orderRepository.saveAll(Arrays.asList(o1,o2,o3));
+		
+		OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice());
+		OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice());
+		OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
+		OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
+		
+		orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
 	}
 
 }
